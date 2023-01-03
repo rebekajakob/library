@@ -1,6 +1,16 @@
 package com.rebekajakob.library.model;
 
-import java.time.LocalDateTime;
+import lombok.Builder;
+import lombok.Getter;
 
-public record Reservation(LocalDateTime reservationDate, LocalDateTime endDate) {
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@Builder
+@Getter
+public class Reservation{
+    private UUID id;
+    private LocalDateTime reservationDate;
+    private LocalDateTime endDate;
+    private LibraryUser reservedBy;
 }
