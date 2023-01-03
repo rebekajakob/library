@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/book")
 public class BookController {
-    private BookService bookService;
+    private final BookService bookService;
 
     @Autowired
     public BookController(BookService bookService) {
