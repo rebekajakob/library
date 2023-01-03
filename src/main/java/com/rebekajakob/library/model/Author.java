@@ -20,7 +20,4 @@ public class Author {
     private UUID id;
     private String name;
     private LocalDate birthday;
-
-    @OneToMany
-    private List<Book> writtenBooks;
 }
