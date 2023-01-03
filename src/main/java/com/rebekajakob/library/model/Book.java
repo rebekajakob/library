@@ -1,19 +1,18 @@
 package com.rebekajakob.library.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 import java.util.UUID;
 
-@Builder
-@Getter
 @Entity
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

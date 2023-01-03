@@ -1,19 +1,18 @@
 package com.rebekajakob.library.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Builder
-@Getter
 @Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
+@ToString
 public class Reservation{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
