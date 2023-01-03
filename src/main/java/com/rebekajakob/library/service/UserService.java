@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -20,5 +21,9 @@ public class UserService {
         //TODO: unique email
         libraryUser.setStartOfMembership(LocalDate.now());
         libraryUserRepository.save(libraryUser);
+    }
+
+    public List<LibraryUser> getAllUsers(){
+        return libraryUserRepository.findAll();
     }
 }
