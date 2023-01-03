@@ -26,4 +26,15 @@ public class UserController {
     public void addUser(@RequestBody LibraryUser libraryUser){
         userService.addUser(libraryUser);
     }
+
+    @GetMapping("/{userId}")
+    public LibraryUser getUserById(@PathVariable String userId){
+        //TODO: What if invalid userId
+        return userService.getUserById(userId);
+    }
+
+    @PutMapping("/{userId}")
+    public void updateUser(@PathVariable String userId, @RequestBody LibraryUser libraryUser){
+        userService.updateUser(userId,libraryUser);
+    }
 }
