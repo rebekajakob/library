@@ -7,6 +7,7 @@ import com.rebekajakob.library.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -25,9 +26,13 @@ public class BookService {
     }
 
     public void addAuthorToBook(String bookId, Author author){
-        Book currentBook =  bookRepository.getReferenceById(UUID.fromString(bookId));
-        Author currentAuthor = authorRepository.getReferenceById(author.getId());
+        Book currentBook =  bookRepository.findById(UUID.fromString(bookId)).get();
+        Author currentAuthor = authorRepository.findById(author.getId()).get();
         currentBook.setAuthor(currentAuthor);
         bookRepository.save(currentBook);
+    }
+
+    public List<Book> getAllBooks(){
+        return bookRepository.findAll();
     }
 }
