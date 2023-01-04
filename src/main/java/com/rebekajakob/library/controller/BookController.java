@@ -50,6 +50,10 @@ public class BookController {
         bookService.reserveBook(bookId,libraryUser);
     }
 
+    @GetMapping("/available")
+    public List<Book> getAvailableBooks(){
+        return bookService.getAvailableBooks();
+    }
 
 
 

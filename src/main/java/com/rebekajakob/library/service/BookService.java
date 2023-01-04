@@ -29,6 +29,7 @@ public class BookService {
     }
 
     public void addBook(Book book){
+        book.setReturned(true);
         bookRepository.save(book);
     }
 
@@ -64,8 +65,13 @@ public class BookService {
     public void reserveBook(String bookId, LibraryUser libraryUser){
         Book currentBook = bookRepository.findById(UUID.fromString(bookId)).get();
         LibraryUser currentUser = libraryUserRepository.findById(libraryUser.getId()).get();
-        Reservation reservation = Reservation.builder().reservedBy(currentUser).reservationDate(LocalDateTime.now()).endDate(LocalDateTime.now().plusWeeks(1)).returned(false).build();
+        Reservation reservation = Reservation.builder().reservedBy(currentUser).reservationDate(LocalDateTime.now()).endDate(LocalDateTime.now().plusWeeks(1)).build();
         currentBook.getReservations().add(reservation);
+        currentBook.setReturned(false);
         bookRepository.save(currentBook);
+    }
+
+    public List<Book> getAvailableBooks(){
+        return bookRepository.getBooksByReturned(true);
     }
 }
