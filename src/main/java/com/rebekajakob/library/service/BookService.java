@@ -26,16 +26,24 @@ public class BookService {
         this.libraryUserRepository = libraryUserRepository;
     }
 
-    public void addBook(Book book){
+    public Book addBook(Book book){
         book.setReturned(true);
-        bookRepository.save(book);
+        return bookRepository.save(book);
     }
 
-    public void addAuthorToBook(String bookId, Author author){
-        Book currentBook =  bookRepository.findById(UUID.fromString(bookId)).get();
-        Author currentAuthor = authorRepository.findById(author.getId()).get();
+    public Book addAuthorToBook(String bookId, Author author){
+        Book currentBook;
+        Author currentAuthor;
+        if(bookRepository.findById(UUID.fromString(bookId)).isEmpty()){
+            return null;
+        }
+        if(authorRepository.findById(author.getId()).isEmpty()){
+            return null;
+        }
+        currentBook =  bookRepository.findById(UUID.fromString(bookId)).get();
+        currentAuthor = authorRepository.findById(author.getId()).get();
         currentBook.setAuthor(currentAuthor);
-        bookRepository.save(currentBook);
+        return bookRepository.save(currentBook);
     }
 
     public List<Book> getAllBooks(){
@@ -43,10 +51,16 @@ public class BookService {
     }
 
     public Book getBookById(String bookId){
+        if (bookRepository.findById(UUID.fromString(bookId)).isEmpty()){
+            return null;
+        }
         return bookRepository.findById(UUID.fromString(bookId)).get();
     }
 
-    public void updateBook(String bookId,Book book){
+    public Book updateBook(String bookId,Book book){
+        if(bookRepository.findById(UUID.fromString(bookId)).isEmpty()){
+            return null;
+        }
         Book currentBook = bookRepository.findById(UUID.fromString(bookId)).get();
         if(book.getTitle() != null && !book.getTitle().equals(currentBook.getTitle())){
             currentBook.setTitle(book.getTitle());
@@ -57,16 +71,26 @@ public class BookService {
         if(book.getDescription() != null && book.getDescription().equals(currentBook.getDescription())){
             currentBook.setDescription(book.getDescription());
         }
-        bookRepository.save(currentBook);
+        return bookRepository.save(currentBook);
     }
 
-    public void reserveBook(String bookId, LibraryUser libraryUser){
+    public int reserveBook(String bookId, LibraryUser libraryUser){
+        if(bookRepository.findById(UUID.fromString(bookId)).isEmpty()){
+            return 1;
+        }
+        if(libraryUserRepository.findById(libraryUser.getId()).isEmpty()){
+            return 2;
+        }
         Book currentBook = bookRepository.findById(UUID.fromString(bookId)).get();
         LibraryUser currentUser = libraryUserRepository.findById(libraryUser.getId()).get();
+        if(!currentBook.isReturned()){
+            return 3;
+        }
         Reservation reservation = Reservation.builder().reservedBy(currentUser).reservationDate(LocalDateTime.now()).endDate(LocalDateTime.now().plusWeeks(1)).build();
         currentBook.getReservations().add(reservation);
         currentBook.setReturned(false);
         bookRepository.save(currentBook);
+        return 0;
     }
 
     public List<Book> getAvailableBooks(){

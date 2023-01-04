@@ -38,7 +38,7 @@ public class AuthorController {
         if(author != null){
             return ResponseEntity.ok(author.toString());
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please add an existing Author id!");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please add an existing author id!");
     }
 
     @PutMapping("/{authorId}")

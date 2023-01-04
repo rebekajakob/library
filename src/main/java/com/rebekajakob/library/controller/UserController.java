@@ -37,7 +37,7 @@ public class UserController {
     public ResponseEntity<String> getUserById(@PathVariable String userId){
         LibraryUser libraryUser = userService.getUserById(userId);
         if(libraryUser==null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please add an existing Author id!");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please add an existing user id!");
         }
         return ResponseEntity.ok(libraryUser.toString());
     }
@@ -46,7 +46,7 @@ public class UserController {
     public ResponseEntity<String> updateUser(@PathVariable String userId, @RequestBody LibraryUser libraryUser){
         LibraryUser updatedLibraryUser = userService.updateUser(userId,libraryUser);
         if(updatedLibraryUser==null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please add an existing Author id!");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please add an existing user id!");
         }
         return ResponseEntity.ok(updatedLibraryUser.toString());
     }
