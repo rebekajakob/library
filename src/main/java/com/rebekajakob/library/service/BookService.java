@@ -64,7 +64,7 @@ public class BookService {
     public void reserveBook(String bookId, LibraryUser libraryUser){
         Book currentBook = bookRepository.findById(UUID.fromString(bookId)).get();
         LibraryUser currentUser = libraryUserRepository.findById(libraryUser.getId()).get();
-        Reservation reservation = Reservation.builder().reservedBy(currentUser).reservationDate(LocalDateTime.now()).endDate(LocalDateTime.now().plusWeeks(1)).build();
+        Reservation reservation = Reservation.builder().reservedBy(currentUser).reservationDate(LocalDateTime.now()).endDate(LocalDateTime.now().plusWeeks(1)).returned(false).build();
         currentBook.getReservations().add(reservation);
         bookRepository.save(currentBook);
     }
