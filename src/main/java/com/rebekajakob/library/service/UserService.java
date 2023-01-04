@@ -1,7 +1,9 @@
 package com.rebekajakob.library.service;
 
 import com.rebekajakob.library.model.LibraryUser;
+import com.rebekajakob.library.model.Reservation;
 import com.rebekajakob.library.repository.LibraryUserRepository;
+import com.rebekajakob.library.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +14,12 @@ import java.util.UUID;
 @Service
 public class UserService {
     private LibraryUserRepository libraryUserRepository;
+    private ReservationRepository reservationRepository;
 
     @Autowired
-    public UserService(LibraryUserRepository libraryUserRepository) {
+    public UserService(LibraryUserRepository libraryUserRepository, ReservationRepository reservationRepository) {
         this.libraryUserRepository = libraryUserRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     public void addUser(LibraryUser libraryUser){
@@ -44,7 +48,10 @@ public class UserService {
             currentUser.setPassword(libraryUser.getPassword());
         }
         libraryUserRepository.save(currentUser);
+    }
 
-
+    public List<Reservation> getReservationsByUser(String userID){
+        LibraryUser currentUser = libraryUserRepository.findById(UUID.fromString(userID)).get();
+        return reservationRepository.getReservationsByReservedBy(currentUser);
     }
 }

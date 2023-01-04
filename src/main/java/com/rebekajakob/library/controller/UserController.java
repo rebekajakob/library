@@ -1,6 +1,7 @@
 package com.rebekajakob.library.controller;
 
 import com.rebekajakob.library.model.LibraryUser;
+import com.rebekajakob.library.model.Reservation;
 import com.rebekajakob.library.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +37,11 @@ public class UserController {
     @PutMapping("/{userId}")
     public void updateUser(@PathVariable String userId, @RequestBody LibraryUser libraryUser){
         userService.updateUser(userId,libraryUser);
+    }
+
+    @GetMapping("/{userId}/reservations")
+    public List<Reservation> getReservationsByUser(@PathVariable String userId){
+        return userService.getReservationsByUser(userId);
     }
 
 
