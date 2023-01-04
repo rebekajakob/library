@@ -1,7 +1,6 @@
 package com.rebekajakob.library.controller;
 
 import com.rebekajakob.library.model.Author;
-import com.rebekajakob.library.model.Book;
 import com.rebekajakob.library.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

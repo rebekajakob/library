@@ -1,7 +1,6 @@
 package com.rebekajakob.library.service;
 
 import com.rebekajakob.library.model.Author;
-import com.rebekajakob.library.model.LibraryUser;
 import com.rebekajakob.library.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
