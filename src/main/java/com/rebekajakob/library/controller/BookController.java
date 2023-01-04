@@ -3,6 +3,7 @@ package com.rebekajakob.library.controller;
 
 import com.rebekajakob.library.model.Author;
 import com.rebekajakob.library.model.Book;
+import com.rebekajakob.library.model.LibraryUser;
 import com.rebekajakob.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +43,11 @@ public class BookController {
     @PostMapping("/{bookId}/author")
     public void addAuthorToBook(@PathVariable String bookId, @RequestBody Author author){
         bookService.addAuthorToBook(bookId,author);
+    }
+
+    @PostMapping("/{bookId}/reserve")
+    public void reserveBook(@PathVariable String bookId, @RequestBody LibraryUser libraryUser){
+        bookService.reserveBook(bookId,libraryUser);
     }
 
 
