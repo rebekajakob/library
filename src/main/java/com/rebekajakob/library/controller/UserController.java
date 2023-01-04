@@ -46,7 +46,7 @@ public class UserController {
         return userService.getReservationsByUser(userId);
     }
 
-    @PostMapping("/{userId}/reservation/{reservationId}")
+    @PutMapping ("/{userId}/reservation/{reservationId}")
     public void returnBook(@PathVariable String userId,@PathVariable String reservationId){
         userService.returnBook(userId,reservationId);
     }
