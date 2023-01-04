@@ -26,5 +26,4 @@ public class LibraryUser {
     private String password;
     private LocalDate birthday;
     private LocalDate startOfMembership;
-    private LocalDate membershipRenewed;
 }

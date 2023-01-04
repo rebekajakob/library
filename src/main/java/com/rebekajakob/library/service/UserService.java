@@ -43,9 +43,6 @@ public class UserService {
         if(libraryUser.getPassword()!= null && !libraryUser.getPassword().equals(currentUser.getPassword())){
             currentUser.setPassword(libraryUser.getPassword());
         }
-        if(libraryUser.getMembershipRenewed()!=null && !libraryUser.getMembershipRenewed().equals(currentUser.getMembershipRenewed())){
-            currentUser.setMembershipRenewed(libraryUser.getMembershipRenewed());
-        }
         libraryUserRepository.save(currentUser);
 
 
