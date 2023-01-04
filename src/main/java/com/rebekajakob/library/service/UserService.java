@@ -27,10 +27,9 @@ public class UserService {
         this.bookRepository = bookRepository;
     }
 
-    public void addUser(LibraryUser libraryUser){
-        //TODO: unique email
+    public LibraryUser addUser(LibraryUser libraryUser){
         libraryUser.setStartOfMembership(LocalDate.now());
-        libraryUserRepository.save(libraryUser);
+        return libraryUserRepository.save(libraryUser);
     }
 
     public List<LibraryUser> getAllUsers(){
@@ -38,10 +37,16 @@ public class UserService {
     }
 
     public LibraryUser getUserById(String userId){
-        return libraryUserRepository.findById(UUID.fromString(userId)).get();
+        if(libraryUserRepository.findById(UUID.fromString(userId)).isPresent()){
+            return libraryUserRepository.findById(UUID.fromString(userId)).get();
+        }
+        return null;
     }
 
-    public void updateUser(String userId, LibraryUser libraryUser){
+    public LibraryUser updateUser(String userId, LibraryUser libraryUser){
+        if(libraryUserRepository.findById(UUID.fromString(userId)).isEmpty()){
+            return null;
+        }
         LibraryUser currentUser = libraryUserRepository.findById(UUID.fromString(userId)).get();
         if(libraryUser.getName() != null && !libraryUser.getName().equals(currentUser.getName())){
             currentUser.setName(libraryUser.getName());
@@ -53,6 +58,7 @@ public class UserService {
             currentUser.setPassword(libraryUser.getPassword());
         }
         libraryUserRepository.save(currentUser);
+        return currentUser;
     }
 
     public List<Reservation> getReservationsByUser(String userID){
@@ -60,16 +66,16 @@ public class UserService {
         return reservationRepository.getReservationsByReservedBy(currentUser);
     }
 
-    public void returnBook(String userId, String reservationId){
+    public int returnBook(String userId, String reservationId){
         LocalDateTime endDate = LocalDateTime.now();
         LibraryUser currentUser = libraryUserRepository.findById(UUID.fromString(userId)).get();
         List<Reservation> userReservations = getReservationsByUser(userId);
-        Reservation currentReservation= null;
+        Reservation currentReservation;
         boolean currentReservationValid = userReservations.stream().anyMatch(reservation -> reservation.getId().equals(UUID.fromString(reservationId)));
         if (currentReservationValid){
             currentReservation = userReservations.stream().filter(reservation -> reservation.getId().equals(UUID.fromString(reservationId))).findFirst().get();
         } else{
-            //TODO: not valid reservation id or not reservation by user
+            return 1;
         }
         Book currentBook = bookRepository.getBookByReservationId(currentReservation.getId());
         if (!currentBook.isReturned()){
@@ -80,9 +86,10 @@ public class UserService {
             currentReservation.setEndDate(endDate);
             reservationRepository.save(currentReservation);
             bookRepository.save(currentBook);
+            return 0;
         }
         else{
-            //TODO: this book is already returned
+            return 2;
         }
     }
 }

@@ -4,6 +4,8 @@ import com.rebekajakob.library.model.LibraryUser;
 import com.rebekajakob.library.model.Reservation;
 import com.rebekajakob.library.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -23,19 +25,30 @@ public class UserController {
     }
 
     @PostMapping
-    public void addUser(@RequestBody LibraryUser libraryUser){
-        userService.addUser(libraryUser);
+    public ResponseEntity<String> addUser(@RequestBody LibraryUser libraryUser){
+        LibraryUser newLibraryUser = userService.addUser(libraryUser);
+        if (newLibraryUser== null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Sorry, we couldn't save this user " + libraryUser);
+        }
+        return ResponseEntity.ok(newLibraryUser.toString());
     }
 
     @GetMapping("/{userId}")
-    public LibraryUser getUserById(@PathVariable String userId){
-        //TODO: What if invalid userId
-        return userService.getUserById(userId);
+    public ResponseEntity<String> getUserById(@PathVariable String userId){
+        LibraryUser libraryUser = userService.getUserById(userId);
+        if(libraryUser==null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please add an existing Author id!");
+        }
+        return ResponseEntity.ok(libraryUser.toString());
     }
 
     @PutMapping("/{userId}")
-    public void updateUser(@PathVariable String userId, @RequestBody LibraryUser libraryUser){
-        userService.updateUser(userId,libraryUser);
+    public ResponseEntity<String> updateUser(@PathVariable String userId, @RequestBody LibraryUser libraryUser){
+        LibraryUser updatedLibraryUser = userService.updateUser(userId,libraryUser);
+        if(updatedLibraryUser==null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please add an existing Author id!");
+        }
+        return ResponseEntity.ok(updatedLibraryUser.toString());
     }
 
     @GetMapping("/{userId}/reservation")
@@ -44,7 +57,14 @@ public class UserController {
     }
 
     @PutMapping ("/{userId}/reservation/{reservationId}")
-    public void returnBook(@PathVariable String userId,@PathVariable String reservationId){
-        userService.returnBook(userId,reservationId);
+    public ResponseEntity<String> returnBook(@PathVariable String userId, @PathVariable String reservationId){
+        int status = userService.returnBook(userId,reservationId);
+        if(status ==0){
+            return ResponseEntity.ok("Book returned!");
+        } else if(status == 1){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You gave an invalid reservation id!");
+        } else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This book is already returned!");
+        }
     }
 }

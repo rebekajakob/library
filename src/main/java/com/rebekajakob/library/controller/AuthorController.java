@@ -29,7 +29,7 @@ public class AuthorController {
         if(newAuthor!= null){
             return ResponseEntity.ok(newAuthor.toString());
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Sorry, we couldn't save this author " + author.toString());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Sorry, we couldn't save this author " + author);
     }
 
     @GetMapping("/{authorId}")
