@@ -6,7 +6,9 @@ import com.rebekajakob.library.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -39,9 +41,14 @@ public class UserController {
         userService.updateUser(userId,libraryUser);
     }
 
-    @GetMapping("/{userId}/reservations")
+    @GetMapping("/{userId}/reservation")
     public List<Reservation> getReservationsByUser(@PathVariable String userId){
         return userService.getReservationsByUser(userId);
+    }
+
+    @PostMapping("/{userId}/reservation/{reservationId}")
+    public void returnBook(@PathVariable String userId,@PathVariable String reservationId){
+        userService.returnBook(userId,reservationId);
     }
 
 
