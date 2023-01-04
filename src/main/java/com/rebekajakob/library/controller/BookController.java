@@ -7,7 +7,6 @@ import com.rebekajakob.library.model.LibraryUser;
 import com.rebekajakob.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -54,8 +53,4 @@ public class BookController {
     public List<Book> getAvailableBooks(){
         return bookService.getAvailableBooks();
     }
-
-
-
-
 }

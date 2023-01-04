@@ -5,10 +5,7 @@ import com.rebekajakob.library.model.Reservation;
 import com.rebekajakob.library.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -50,6 +47,4 @@ public class UserController {
     public void returnBook(@PathVariable String userId,@PathVariable String reservationId){
         userService.returnBook(userId,reservationId);
     }
-
-
 }

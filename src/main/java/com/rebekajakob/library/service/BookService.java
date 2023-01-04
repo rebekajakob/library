@@ -9,7 +9,6 @@ import com.rebekajakob.library.repository.BookRepository;
 import com.rebekajakob.library.repository.LibraryUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -18,7 +17,6 @@ import java.util.UUID;
 public class BookService {
     private BookRepository bookRepository;
     private AuthorRepository authorRepository;
-
     private LibraryUserRepository libraryUserRepository;
 
     @Autowired

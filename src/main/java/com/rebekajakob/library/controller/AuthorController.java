@@ -4,7 +4,6 @@ import com.rebekajakob.library.model.Author;
 import com.rebekajakob.library.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -36,6 +35,4 @@ public class AuthorController {
     public void updateAuthor(@PathVariable String authorId, @RequestBody Author author){
         authorService.updateAuthor(authorId,author);
     }
-
-
 }
