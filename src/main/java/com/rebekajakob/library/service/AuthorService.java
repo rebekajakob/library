@@ -16,8 +16,8 @@ public class AuthorService {
         this.authorRepository = authorRepository;
     }
 
-    public void addAuthor(Author author){
-        authorRepository.save(author);
+    public Author addAuthor(Author author){
+        return authorRepository.save(author);
     }
 
     public List<Author> getAllAuthors(){
@@ -25,17 +25,25 @@ public class AuthorService {
     }
 
     public Author getAuthorByID(String authorId){
-        return authorRepository.findById(UUID.fromString(authorId)).get();
+        if (authorRepository.findById(UUID.fromString(authorId)).isPresent()){
+            return authorRepository.findById(UUID.fromString(authorId)).get();
+        }
+        return null;
     }
 
-    public void updateAuthor(String authorId, Author author){
-        Author currentAuthor = authorRepository.findById(UUID.fromString(authorId)).get();
+    public Author updateAuthor(String authorId, Author author){
+        Author currentAuthor;
+        if (authorRepository.findById(UUID.fromString(authorId)).isPresent()) {
+            currentAuthor = authorRepository.findById(UUID.fromString(authorId)).get();
+        }else{
+            return null;
+        }
         if(author.getBirthday() != null && !author.getBirthday().equals(currentAuthor.getBirthday())){
             currentAuthor.setBirthday(author.getBirthday());
         }
         if(author.getName() != null && !author.getName().equals(currentAuthor.getName())){
             currentAuthor.setName(author.getName());
         }
-        authorRepository.save(currentAuthor);
+        return authorRepository.save(currentAuthor);
     }
 }
