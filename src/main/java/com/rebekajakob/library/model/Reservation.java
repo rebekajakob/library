@@ -21,5 +21,4 @@ public class Reservation{
     private LocalDateTime endDate;
     @ManyToOne
     private LibraryUser reservedBy;
-    private boolean returned;
 }

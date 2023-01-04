@@ -1,7 +1,9 @@
 package com.rebekajakob.library.service;
 
+import com.rebekajakob.library.model.Book;
 import com.rebekajakob.library.model.LibraryUser;
 import com.rebekajakob.library.model.Reservation;
+import com.rebekajakob.library.repository.BookRepository;
 import com.rebekajakob.library.repository.LibraryUserRepository;
 import com.rebekajakob.library.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +14,19 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
     private LibraryUserRepository libraryUserRepository;
     private ReservationRepository reservationRepository;
 
+    private BookRepository bookRepository;
+
     @Autowired
-    public UserService(LibraryUserRepository libraryUserRepository, ReservationRepository reservationRepository) {
+    public UserService(LibraryUserRepository libraryUserRepository, ReservationRepository reservationRepository, BookRepository bookRepository) {
         this.libraryUserRepository = libraryUserRepository;
         this.reservationRepository = reservationRepository;
+        this.bookRepository = bookRepository;
     }
 
     public void addUser(LibraryUser libraryUser){
@@ -69,20 +73,18 @@ public class UserService {
         } else{
             //TODO: not valid reservation id or not reservation by user
         }
-        if (!currentReservation.isReturned()){
+        Book currentBook = bookRepository.getBookByReservationId(currentReservation.getId());
+        if (!currentBook.isReturned()){
             if(Duration.between(currentReservation.getEndDate(),endDate).getNano() <0){
                 currentUser.setLatelyReturnedBooks(currentUser.getLatelyReturnedBooks()+1);
             }
-            currentReservation.setReturned(true);
+            currentBook.setReturned(true);
             currentReservation.setEndDate(endDate);
             reservationRepository.save(currentReservation);
+            bookRepository.save(currentBook);
         }
         else{
             //TODO: this book is already returned
         }
-
-
-
-
     }
 }

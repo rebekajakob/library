@@ -24,4 +24,5 @@ public class Book {
     private int pages;
     @OneToMany(orphanRemoval = true, cascade = {CascadeType.ALL})
     private List<Reservation> reservations;
+    private boolean returned;
 }
