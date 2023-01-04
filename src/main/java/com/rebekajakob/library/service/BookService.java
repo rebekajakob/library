@@ -35,4 +35,22 @@ public class BookService {
     public List<Book> getAllBooks(){
         return bookRepository.findAll();
     }
+
+    public Book getBookById(String bookId){
+        return bookRepository.findById(UUID.fromString(bookId)).get();
+    }
+
+    public void updateBook(String bookId,Book book){
+        Book currentBook = bookRepository.findById(UUID.fromString(bookId)).get();
+        if(book.getTitle() != null && !book.getTitle().equals(currentBook.getTitle())){
+            currentBook.setTitle(book.getTitle());
+        }
+        if(book.getPages() != 0 && book.getPages()!= currentBook.getPages()){
+            currentBook.setPages(book.getPages());
+        }
+        if(book.getDescription() != null && book.getDescription().equals(currentBook.getDescription())){
+            currentBook.setDescription(book.getDescription());
+        }
+        bookRepository.save(currentBook);
+    }
 }

@@ -29,10 +29,22 @@ public class BookController {
         bookService.addBook(book);
     }
 
+    @GetMapping("/{bookId}")
+    public Book getBookById(@PathVariable String bookId){
+        return bookService.getBookById(bookId);
+    }
+
+    @PutMapping("/{bookId}")
+    public void updateBook(@PathVariable String bookId, @RequestBody Book book){
+        bookService.updateBook(bookId,book);
+    }
+
     @PostMapping("/{bookId}/author")
     public void addAuthorToBook(@PathVariable String bookId, @RequestBody Author author){
         bookService.addAuthorToBook(bookId,author);
     }
+
+
 
 
 
