@@ -27,39 +27,39 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<String> addBook(@RequestBody Book book){
+    public ResponseEntity<?> addBook(@RequestBody Book book){
         Book newBook = bookService.addBook(book);
         if (newBook== null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Sorry, we couldn't save this book " + book);
         }
-        return ResponseEntity.ok(newBook.toString());
+        return ResponseEntity.ok(newBook);
     }
 
     @GetMapping("/{bookId}")
-    public ResponseEntity<String> getBookById(@PathVariable String bookId){
+    public ResponseEntity<?> getBookById(@PathVariable String bookId){
         Book book = bookService.getBookById(bookId);
         if(book==null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please add an existing book id!");
         }
-        return ResponseEntity.ok(book.toString());
+        return ResponseEntity.ok(book);
     }
 
     @PutMapping("/{bookId}")
-    public ResponseEntity<String> updateBook(@PathVariable String bookId, @RequestBody Book book){
+    public ResponseEntity<?> updateBook(@PathVariable String bookId, @RequestBody Book book){
         Book updatedBook = bookService.updateBook(bookId,book);
         if(updatedBook==null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please add an existing book id!");
         }
-        return ResponseEntity.ok(updatedBook.toString());
+        return ResponseEntity.ok(updatedBook);
     }
 
     @PostMapping("/{bookId}/author")
-    public ResponseEntity<String> addAuthorToBook(@PathVariable String bookId, @RequestBody Author author){
+    public ResponseEntity<?> addAuthorToBook(@PathVariable String bookId, @RequestBody Author author){
         Book book = bookService.addAuthorToBook(bookId,author);
         if(book==null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please add an existing book id and existing author id in the request body!");
         }
-        return ResponseEntity.ok(book.toString());
+        return ResponseEntity.ok(book);
     }
 
     @PostMapping("/{bookId}/reserve")
