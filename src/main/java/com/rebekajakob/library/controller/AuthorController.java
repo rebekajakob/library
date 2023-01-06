@@ -24,28 +24,28 @@ public class AuthorController {
     }
 
     @PostMapping
-    public ResponseEntity<String> addAuthor(@RequestBody Author author){
+    public ResponseEntity<?> addAuthor(@RequestBody Author author){
         Author newAuthor = authorService.addAuthor(author);
         if(newAuthor!= null){
-            return ResponseEntity.ok(newAuthor.toString());
+            return ResponseEntity.ok(newAuthor);
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Sorry, we couldn't save this author " + author);
     }
 
     @GetMapping("/{authorId}")
-    public ResponseEntity<String> getAuthorById(@PathVariable String authorId){
+    public ResponseEntity<?> getAuthorById(@PathVariable String authorId){
         Author author = authorService.getAuthorByID(authorId);
         if(author != null){
-            return ResponseEntity.ok(author.toString());
+            return ResponseEntity.ok(author);
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please add an existing author id!");
     }
 
     @PutMapping("/{authorId}")
-    public ResponseEntity<String> updateAuthor(@PathVariable String authorId, @RequestBody Author author){
+    public ResponseEntity<?> updateAuthor(@PathVariable String authorId, @RequestBody Author author){
         Author updatedAuthor = authorService.updateAuthor(authorId,author);
         if(updatedAuthor!= null){
-            return ResponseEntity.ok(updatedAuthor.toString());
+            return ResponseEntity.ok(updatedAuthor);
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please add an existing Author id!");
     }
