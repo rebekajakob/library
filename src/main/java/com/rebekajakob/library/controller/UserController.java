@@ -25,30 +25,30 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<String> addUser(@RequestBody LibraryUser libraryUser){
+    public ResponseEntity<?> addUser(@RequestBody LibraryUser libraryUser){
         LibraryUser newLibraryUser = userService.addUser(libraryUser);
         if (newLibraryUser== null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Sorry, we couldn't save this user " + libraryUser);
         }
-        return ResponseEntity.ok(newLibraryUser.toString());
+        return ResponseEntity.ok(newLibraryUser);
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<String> getUserById(@PathVariable String userId){
+    public ResponseEntity<?> getUserById(@PathVariable String userId){
         LibraryUser libraryUser = userService.getUserById(userId);
         if(libraryUser==null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please add an existing user id!");
         }
-        return ResponseEntity.ok(libraryUser.toString());
+        return ResponseEntity.ok(libraryUser);
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<String> updateUser(@PathVariable String userId, @RequestBody LibraryUser libraryUser){
+    public ResponseEntity<?> updateUser(@PathVariable String userId, @RequestBody LibraryUser libraryUser){
         LibraryUser updatedLibraryUser = userService.updateUser(userId,libraryUser);
         if(updatedLibraryUser==null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please add an existing user id!");
         }
-        return ResponseEntity.ok(updatedLibraryUser.toString());
+        return ResponseEntity.ok(updatedLibraryUser);
     }
 
     @GetMapping("/{userId}/reservation")
