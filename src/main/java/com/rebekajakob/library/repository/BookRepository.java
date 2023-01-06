@@ -1,6 +1,7 @@
 package com.rebekajakob.library.repository;
 
 import com.rebekajakob.library.model.Book;
+import com.rebekajakob.library.model.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,8 +11,8 @@ import java.util.UUID;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, UUID> {
-    @Query("SELECT b FROM Book b JOIN Reservation r WHERE r.id = :reservationId")
-    Book getBookByReservationId(@Param("reservationId") UUID reservationId);
+    @Query("SELECT b FROM Book b join b.reservations as r WHERE r.id = ?1")
+    Book getBookByReservationId(UUID reservationId);
 
     List<Book> getBooksByReturned(boolean returned);
 
