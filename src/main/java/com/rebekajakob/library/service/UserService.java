@@ -57,6 +57,9 @@ public class UserService {
         if(libraryUser.getPassword()!= null && !libraryUser.getPassword().equals(currentUser.getPassword())){
             currentUser.setPassword(libraryUser.getPassword());
         }
+        if(libraryUser.getEmail()!=null && !libraryUser.getEmail().equals(currentUser.getEmail())){
+            currentUser.setEmail(libraryUser.getEmail());
+        }
         libraryUserRepository.save(currentUser);
         return currentUser;
     }
