@@ -16,9 +16,9 @@ import java.util.UUID;
 
 @Service
 public class UserService {
-    private LibraryUserRepository libraryUserRepository;
-    private ReservationRepository reservationRepository;
-    private BookRepository bookRepository;
+    private final LibraryUserRepository libraryUserRepository;
+    private final ReservationRepository reservationRepository;
+    private final BookRepository bookRepository;
 
     @Autowired
     public UserService(LibraryUserRepository libraryUserRepository, ReservationRepository reservationRepository, BookRepository bookRepository) {
